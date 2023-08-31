@@ -1,5 +1,6 @@
 // ignore_for_file: unused_field
 
+import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:flutter/material.dart';
 
 import '../models/expense_model.dart';
@@ -33,10 +34,12 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
-        children: [Text("the Chart"), Text("Expense list...")],
-      ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [ const Text("the Chart"),
+           Expanded(child: ExpensesList(expenses: _registeredExpenses))],
+        ),
     );
   }
 }

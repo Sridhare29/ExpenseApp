@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Screens/expense.dart';
+import 'widgets/expense.dart';
 
 void main(){
   runApp(const MyApp());
