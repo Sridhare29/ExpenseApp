@@ -35,6 +35,12 @@ class _ExpensesState extends State<Expenses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Expense App",),
+        actions:  [
+          IconButton(onPressed: () {}, icon: Icon(Icons.add))
+        ],
+      ),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [ const Text("the Chart"),
