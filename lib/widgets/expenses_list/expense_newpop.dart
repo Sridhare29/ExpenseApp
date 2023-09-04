@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key, required this.onAddExpense});
-  
-  final void Function(Expense expense) onAddExpense; 
+
+  final void Function(Expense expense) onAddExpense;
   @override
   State<NewExpense> createState() => _NewExpenseState();
 }
@@ -45,24 +45,29 @@ class _NewExpenseState extends State<NewExpense> {
         amountInValid ||
         _selectedDate == null) {
       showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-                title: const Text("Invalid input"),
-                content: const Text("Please make sure the input data!"),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(ctx);
-                    },
-                    child: const Text("Okay"),
-                  ),
-                ],
-              ),
-              );
-              return;
-
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Invalid input"),
+          content: const Text("Please make sure the input data!"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text("Okay"),
+            ),
+          ],
+        ),
+      );
+      return;
     }
-    widget.onAddExpense(Expense(title: _titleController.text, amount: enteredAmount, date: _selectedDate!, category: _selectedCategory));
+    widget.onAddExpense(Expense(
+        title: _titleController.text,
+        amount: enteredAmount,
+        date: _selectedDate!,
+        category: _selectedCategory)
+        );
+        Navigator.pop(context); //back to list after press submit 
   }
 
   @override
