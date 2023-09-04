@@ -19,6 +19,7 @@ class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountControlller = TextEditingController();
   DateTime? _selectedDate;
+  Category _selectedCategory = Category.food;
 
   void _presentDatePicker() async {
     final now = DateTime.now();
@@ -32,6 +33,34 @@ class _NewExpenseState extends State<NewExpense> {
     setState(() {
       _selectedDate = pickedDate;
     });
+  }
+
+  void _submitExpenseData() {
+    final enteredAmount = double.tryParse(_amountControlller
+        .text); //tryParse("Hello")=> null, tryparse('1.12') => 1.12
+    // ignore: unused_local_variable
+    final amountInValid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountInValid ||
+        _selectedDate == null) {
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: const Text("Invalid input"),
+                content: const Text("Please make sure the input data!"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                    },
+                    child: const Text("Okay"),
+                  ),
+                ],
+              ),
+              );
+              return;
+
+    }
   }
 
   @override
@@ -68,7 +97,9 @@ class _NewExpenseState extends State<NewExpense> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                   Text(_selectedDate == null ? "no date picked": formatter.format(_selectedDate!)),
+                  Text(_selectedDate == null
+                      ? "no date picked"
+                      : formatter.format(_selectedDate!)),
                   IconButton(
                       onPressed: () {
                         _presentDatePicker();
@@ -83,6 +114,26 @@ class _NewExpenseState extends State<NewExpense> {
           ),
           Row(
             children: [
+              DropdownButton(
+                  dropdownColor: Colors.white,
+                  value: _selectedCategory,
+                  items: Category.values
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e.name.toUpperCase()),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value == null) {
+                      return;
+                    }
+                    setState(() {
+                      _selectedCategory = value;
+                    });
+                  }),
+              const Spacer(),
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -92,10 +143,7 @@ class _NewExpenseState extends State<NewExpense> {
                 width: 20,
               ),
               ElevatedButton(
-                onPressed: () {
-                  print(_titleController.text);
-                  print(_amountControlller.text);
-                },
+                onPressed: _submitExpenseData,
                 child: const Text("Save Expense"),
               ),
             ],
