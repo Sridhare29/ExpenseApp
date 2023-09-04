@@ -42,6 +42,13 @@ class _ExpensesState extends State<Expenses> {
           _registeredExpenses.add(expense);
     });
   }
+
+  void _removeExpense(Expense expense){
+    setState(() {
+          _registeredExpenses.remove(expense);
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +62,7 @@ class _ExpensesState extends State<Expenses> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text("the Chart"),
-          Expanded(child: ExpensesList(expenses: _registeredExpenses))
+          Expanded(child: ExpensesList(expenses: _registeredExpenses,onRemoveExpense: _removeExpense,))
         ],
       ),
     );
