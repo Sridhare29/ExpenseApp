@@ -67,6 +67,9 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.height);
+    print(MediaQuery.of(context).size.width);
+
     Widget mainContent = const Center(child: Text("No Expense found. Start adding some!"),);
     if(_registeredExpenses.isNotEmpty){
       mainContent =  ExpensesList(
